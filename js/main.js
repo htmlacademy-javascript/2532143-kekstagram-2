@@ -1,5 +1,5 @@
 // функция для генерации комментария
-const generateComment = (commentId) => {
+const generateComment = function(commentId) {
   const AVATARS = [1, 2, 3, 4, 5, 6];
   const MESSAGES = [
     'Всё отлично!',
@@ -16,7 +16,7 @@ const generateComment = (commentId) => {
   let message = '';
   for (let j = 0; j < messageCount; j++) {
     const randomMessage = MESSAGES[Math.floor(Math.random() * MESSAGES.length)];
-    message += randomMessage + ' ';
+    message += `${randomMessage } `;
   }
 
   return {
@@ -28,7 +28,7 @@ const generateComment = (commentId) => {
 };
 
 // функция для генерации массива
-const generatePhotos = () => {
+const generatePhotos = function () {
   const photos = [];
   let currentCommentId = 101;
   const DESCRIPTIONS = ['Закат', 'Море', 'Горы', 'Цветы', 'Город', 'Пляж', 'Рассвет', 'Новый автомобиль']; // Список описаний
