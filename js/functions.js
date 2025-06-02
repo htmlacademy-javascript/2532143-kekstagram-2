@@ -1,15 +1,10 @@
 // Проверка длины строки
-const getStringLength = function (string, maxLength) {
-  if (string.length <= maxLength) {
-    return true;
-  }
-  return false;
-};
+const getStringLength = (string, maxLength) => string.length <= maxLength;
 
 getStringLength('Шапка', 5);
 
 // Проверка на палиндром
-const isPalindrome = function (string) {
+const isPalindrome = (string) => {
   string = string.replaceAll(' ', '');
   const example = string.toUpperCase();
   let palindrome = '';
@@ -17,7 +12,7 @@ const isPalindrome = function (string) {
   for (let i = example.length - 1; i >= 0 ; i--) {
     palindrome += example[i];
     if (palindrome === example) {
-      return palindrome;
+      return true;
     }
   }
 };
@@ -25,7 +20,7 @@ const isPalindrome = function (string) {
 isPalindrome('Леша на полке клопа нашел');
 
 // Функция, извлекающая числа из строки
-const getNumber = function (string) {
+const getNumber = (string) => {
   if (typeof string !== 'string') {
     string = string.toString();
   }
