@@ -1,4 +1,5 @@
-import {generatePhotos} from './photo-generator';
+import {generatePhotos} from './photo-generator.js';
+import './popup.js';
 
 console.log(generatePhotos());
 

@@ -1,6 +1,6 @@
-import {generateComment} from './comment-generator';
-import {getRandomInteger} from './utils';
-import {DESCRIPTIONS} from './data';
+import {generateComment} from './comment-generator.js';
+import {getRandomInteger} from './utils.js';
+import {DESCRIPTIONS} from './data.js';
 
 const generatePhotos = () => {
   const photos = [];
