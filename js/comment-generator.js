@@ -1,7 +1,7 @@
-import {getRandomInteger} from './utils';
-import {MESSAGES} from './data';
-import {AVATARS} from './data';
-import {NAMES} from './data';
+import {getRandomInteger} from './utils.js';
+import {MESSAGES} from './data.js';
+import {AVATARS} from './data.js';
+import {NAMES} from './data.js';
 
 const generateComment = (commentId) => {
   // Генерация предложений для message
