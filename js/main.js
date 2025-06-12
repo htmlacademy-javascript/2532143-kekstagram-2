@@ -1,5 +1,6 @@
 import {generatePhotos} from './photo-generator.js';
-import './popup.js';
 
-console.log(generatePhotos());
+import { renderCards } from './thumbnails.js';
+
+renderCards(generatePhotos());
 
