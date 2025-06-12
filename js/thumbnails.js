@@ -1,3 +1,6 @@
+import './active-picture-render.js';
+import {openBigPicture} from './active-picture.js';
+
 const pictureContainer = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture')
   .content
@@ -14,7 +17,16 @@ export const renderCards = (photos) => {
     testPicture.querySelector('.picture__comments').textContent = comments.length;
 
     picturesFragment.append(testPicture);
+
+    testPicture.addEventListener('click', (evt) => {
+      evt.preventDefault();
+      openBigPicture({url, likes, description, comments});
+    });
   });
 
   pictureContainer.append(picturesFragment);
-}
+};
+
+export const clearRenderCards = () => {
+  pictureContainer.innerHTML = '';
+};
