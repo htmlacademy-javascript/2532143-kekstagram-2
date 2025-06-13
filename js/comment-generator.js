@@ -11,7 +11,6 @@ const generateComment = (commentId) => {
     const randomMessage = MESSAGES[getRandomInteger(0, MESSAGES.length - 1)];
     message += randomMessage;
   }
-
   return {
     id: commentId,
     avatar: `img/avatar-${AVATARS[getRandomInteger(0, AVATARS.length - 1)]}.svg`,
