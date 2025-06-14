@@ -1,40 +1,44 @@
 import {isEscapeKey} from './utils.js';
-import {renderComment, renderBigPicture} from './active-picture-render.js';
-import { generateComment } from './comment-generator.js';
+import {renderComments} from './render-comments.js';
+import {commentsContainer} from './render-comments.js';
 
-const container = document.querySelector('.pictures');
-const pictures = container.querySelectorAll('.picture');
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureCancel = document.querySelector('.big-picture__cancel');
 
-export const openBigPicture = ({url, likes, description, comments}) => {
-  if (pictures) {
-    bigPicture.classList.remove('hidden');
-    document.body.classList.add('modal-open');
-    document.querySelector('.comments-loader').classList.add('hidden');
+const renderBigPicture = ({ url, likes, description, comments }) => {
+
+  bigPicture.querySelector('.big-picture__img img').src = url;
+  bigPicture.querySelector('.likes-count').textContent = likes;
+  bigPicture.querySelector('.social__comment-total-count').textContent = comments.length;
+  bigPicture.querySelector('.social__caption').textContent = description;
+};
+
+const onActiveEscKeydown = (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    closeBigPicture();
   }
+};
 
-  document.addEventListener('keydown', (evt) => {
-    if (isEscapeKey(evt)) {
-      evt.preventDefault();
-      bigPicture.classList.add('hidden');
-    }
-  });
+export const openBigPicture = ({ url, likes, description, comments }) => {
+  bigPicture.classList.remove('hidden');
+  document.body.classList.add('modal-open');
+  document.querySelector('.comments-loader').classList.add('hidden');
+  document.addEventListener('keydown', onActiveEscKeydown);
 
-  renderBigPicture({url, likes, description, comments});
-  renderComment(generateComment());
+  renderBigPicture({ url, likes, description, comments });
+  renderComments({comments});
 };
 
 const closeBigPicture = () => {
   bigPicture.classList.add('hidden');
+  document.body.classList.remove('modal-open');
+  document.removeEventListener('keydown', onActiveEscKeydown);
+  commentsContainer.innerHTML = '';
 };
-
-container.addEventListener('click', () => {
-  openBigPicture();
-});
 
 bigPictureCancel.addEventListener('click', () => {
   closeBigPicture();
 });
 
-export {bigPicture};
+

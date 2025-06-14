@@ -1,4 +1,3 @@
-import './active-picture-render.js';
 import {openBigPicture} from './active-picture.js';
 
 const pictureContainer = document.querySelector('.pictures');
@@ -25,8 +24,4 @@ export const renderCards = (photos) => {
   });
 
   pictureContainer.append(picturesFragment);
-};
-
-export const clearRenderCards = () => {
-  pictureContainer.innerHTML = '';
 };
