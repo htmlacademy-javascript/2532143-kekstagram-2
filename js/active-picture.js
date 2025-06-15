@@ -23,7 +23,7 @@ const onActiveEscKeydown = (evt) => {
 export const openBigPicture = ({ url, likes, description, comments }) => {
   bigPicture.classList.remove('hidden');
   document.body.classList.add('modal-open');
-  document.querySelector('.comments-loader').classList.add('hidden');
+  document.querySelector('.social__comment-shown-count').textContent = comments.length;
   document.addEventListener('keydown', onActiveEscKeydown);
 
   renderBigPicture({ url, likes, description, comments });
