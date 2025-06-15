@@ -1,5 +1,5 @@
 import {isEscapeKey} from './utils.js';
-import {renderComments} from './render-comments.js';
+import {cleanComments, renderComments} from './render-comments.js';
 import {commentsContainer} from './render-comments.js';
 import {commentsMoreButton} from './render-comments.js';
 
@@ -25,10 +25,9 @@ export const openBigPicture = ({ url, likes, description, comments }) => {
   bigPicture.classList.remove('hidden');
   document.body.classList.add('modal-open');
   commentsMoreButton.classList.remove('hidden');
-  document.querySelector('.social__comment-shown-count').textContent = comments.length;
   document.addEventListener('keydown', onActiveEscKeydown);
 
-  renderBigPicture({ url, likes, description, comments });
+  renderBigPicture({url, likes, description, comments});
   renderComments({comments});
 };
 
@@ -37,6 +36,7 @@ const closeBigPicture = () => {
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onActiveEscKeydown);
   commentsContainer.innerHTML = '';
+  cleanComments();
 };
 
 bigPictureCancel.addEventListener('click', () => {
