@@ -1,6 +1,7 @@
 import {isEscapeKey} from './utils.js';
 import {renderComments} from './render-comments.js';
 import {commentsContainer} from './render-comments.js';
+import {commentsMoreButton} from './render-comments.js';
 
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureCancel = document.querySelector('.big-picture__cancel');
@@ -23,6 +24,7 @@ const onActiveEscKeydown = (evt) => {
 export const openBigPicture = ({ url, likes, description, comments }) => {
   bigPicture.classList.remove('hidden');
   document.body.classList.add('modal-open');
+  commentsMoreButton.classList.remove('hidden');
   document.querySelector('.social__comment-shown-count').textContent = comments.length;
   document.addEventListener('keydown', onActiveEscKeydown);
 

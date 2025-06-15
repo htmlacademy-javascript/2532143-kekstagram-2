@@ -1,7 +1,7 @@
 export const commentsContainer = document.querySelector('.social__comments');
 const commentsFragment = document.createDocumentFragment();
 const commentTemplate = commentsContainer.querySelector('li');
-const commentsMoreButton = document.querySelector('.comments-loader');
+export const commentsMoreButton = document.querySelector('.comments-loader');
 
 let shownComments = 0;
 let allComments = [];
@@ -29,5 +29,8 @@ commentsMoreButton.addEventListener('click', () => {
   const nextComments = Math.min(shownComments + 5, allComments.length);
   renderLimitedComments(allComments, shownComments, nextComments);
   shownComments = nextComments;
+  if (shownComments === allComments.length) {
+    commentsMoreButton.classList.add('hidden');
+  }
 });
 
