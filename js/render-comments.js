@@ -22,7 +22,8 @@ export const renderComments = ({comments}) => {
   allComments = comments;
   commentsContainer.innerHTML = '';
   shownComments = Math.min(5, allComments.length);
-  if (allComments.length < 5) {
+  if (allComments.length <= 5) {
+    commentsMoreButton.classList.add('hidden');
     document.querySelector('.social__comment-shown-count').textContent = allComments.length;
   }
   renderLimitedComments(allComments, 0, shownComments);
