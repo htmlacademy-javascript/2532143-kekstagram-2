@@ -22,6 +22,10 @@ export const renderComments = ({comments}) => {
   allComments = comments;
   commentsContainer.innerHTML = '';
   shownComments = Math.min(5, allComments.length);
+  if (allComments.length <= 5) {
+    commentsMoreButton.classList.add('hidden');
+    document.querySelector('.social__comment-shown-count').textContent = allComments.length;
+  }
   renderLimitedComments(allComments, 0, shownComments);
 };
 
@@ -29,8 +33,15 @@ commentsMoreButton.addEventListener('click', () => {
   const nextComments = Math.min(shownComments + 5, allComments.length);
   renderLimitedComments(allComments, shownComments, nextComments);
   shownComments = nextComments;
+  document.querySelector('.social__comment-shown-count').textContent = shownComments;
   if (shownComments === allComments.length) {
     commentsMoreButton.classList.add('hidden');
+    document.querySelector('.social__comment-shown-count').textContent = allComments.length;
   }
 });
 
+export const cleanComments = () => {
+  if (shownComments === allComments.length) {
+    document.querySelector('.social__comment-shown-count').textContent = 5;
+  }
+};
