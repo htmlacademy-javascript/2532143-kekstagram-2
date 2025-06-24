@@ -1,4 +1,6 @@
 import {isEscapeKey} from './utils.js';
+import {resetScale} from './upload-img-scale-config.js';
+import './upload-img-scale-config.js';
 
 const uploadForm = document.querySelector('.img-upload__form');
 const uploadButton = document.querySelector('.img-upload__input');
@@ -14,6 +16,7 @@ const closeEditor = () => {
   document.removeEventListener('keydown', onActiveEscKeydown);
   hashtagField.removeEventListener('keydown', evtEscPrevent);
   commentField.removeEventListener('keydown', evtEscPrevent);
+  resetScale();
   uploadButton.value = '';
 };
 
