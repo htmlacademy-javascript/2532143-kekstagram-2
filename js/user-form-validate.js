@@ -53,27 +53,19 @@ const isHashtagValid = (value) => {
 
   return rules.every((rule) => {
     const isInvalid = rule.check;
-    if (isInvalid) {
-      errorMessage = rule.error;
-      imgUploadButton.disabled = true;
-    } else if (!isInvalid) {
-      imgUploadButton.disabled = false;
-    }
+    errorMessage = rule.error;
+    imgUploadButton.disabled = isInvalid;
     return !isInvalid;
   });
-
 };
 
 const isCommentValid = (value) => {
   const isInvalid = value.length > maxCommentSymbols;
-  if (isInvalid) {
-    errorMessage = `Длина комментария не должна превышать ${maxCommentSymbols} символов`;
-    imgUploadButton.disabled = true;
-  } else if (!isInvalid) {
-    imgUploadButton.disabled = false;
-  }
+  errorMessage = `Длина комментария не должна превышать ${maxCommentSymbols} символов`;
+  imgUploadButton.disabled = isInvalid;
   return !isInvalid;
 };
+
 
 pristine.addValidator(hashtagField, isHashtagValid, error);
 pristine.addValidator(commentField, isCommentValid, error);
