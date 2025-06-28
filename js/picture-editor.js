@@ -1,5 +1,6 @@
-import {isEscapeKey} from './utils.js';
+import {isEscapeKey} from './utils/util.js';
 import {resetScale} from './upload-img-scale-config.js';
+import {formSubmit} from './utils/load-form.js';
 import './upload-img-scale-config.js';
 
 const uploadForm = document.querySelector('.img-upload__form');
@@ -8,7 +9,7 @@ const editorWindow = document.querySelector('.img-upload__overlay');
 const editorCancelButton = document.querySelector('.img-upload__cancel');
 const hashtagField = document.querySelector('.text__hashtags');
 const commentField = document.querySelector('.text__description');
-const imgUploadButton = document.querySelector('.img-upload__submit');
+const imgLoadButton = document.querySelector('.img-upload__submit');
 
 const closeEditor = () => {
   editorWindow.classList.add('hidden');
@@ -16,22 +17,24 @@ const closeEditor = () => {
   document.removeEventListener('keydown', onActiveEscKeydown);
   hashtagField.removeEventListener('keydown', evtEscPrevent);
   commentField.removeEventListener('keydown', evtEscPrevent);
-  resetScale();
+  hashtagField.value = '';
+  commentField.value = '';
   uploadButton.value = '';
+  resetScale();
 };
 
-const onActiveEscKeydown = (evt) => {
+function onActiveEscKeydown(evt) {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     closeEditor();
   }
-};
+}
 
-const evtEscPrevent = (evt) => {
+function evtEscPrevent (evt) {
   if (isEscapeKey(evt)) {
     evt.stopPropagation(closeEditor);
   }
-};
+}
 
 const openEditor = () => {
   editorWindow.classList.remove('hidden');
@@ -43,5 +46,6 @@ const openEditor = () => {
 
 uploadButton.addEventListener('change', openEditor);
 editorCancelButton.addEventListener('click', closeEditor);
+uploadForm.addEventListener('submit', formSubmit);
 
-export {uploadForm, hashtagField, commentField, imgUploadButton};
+export {uploadForm, hashtagField, commentField, imgLoadButton, closeEditor};

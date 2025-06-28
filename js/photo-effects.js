@@ -99,4 +99,10 @@ const effectChange = (evt) => {
   }
 };
 
+export const resetEffects = () => {
+  effectLevel.classList.add('hidden');
+  previewImage.style.filter = 'none';
+  document.querySelector('#effect-none').checked = true;
+};
+
 effectsList.addEventListener('change', effectChange);

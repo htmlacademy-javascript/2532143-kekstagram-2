@@ -1,5 +1,5 @@
 import { uploadForm, hashtagField, commentField } from './picture-editor.js';
-import { imgUploadButton } from './picture-editor.js';
+import { imgLoadButton } from './picture-editor.js';
 
 const pristine = new Pristine(uploadForm, {
   classTo: 'img-upload__field-wrapper',
@@ -47,14 +47,14 @@ const isHashtagValid = (value) => {
   ];
 
   if (inputText === '') {
-    imgUploadButton.disabled = false;
+    imgLoadButton.disabled = false;
     return true;
   }
 
   return rules.every((rule) => {
     const isInvalid = rule.check;
     errorMessage = rule.error;
-    imgUploadButton.disabled = isInvalid;
+    imgLoadButton.disabled = isInvalid;
     return !isInvalid;
   });
 };
@@ -62,7 +62,7 @@ const isHashtagValid = (value) => {
 const isCommentValid = (value) => {
   const isInvalid = value.length > maxCommentSymbols;
   errorMessage = `Длина комментария не должна превышать ${maxCommentSymbols} символов`;
-  imgUploadButton.disabled = isInvalid;
+  imgLoadButton.disabled = isInvalid;
   return !isInvalid;
 };
 

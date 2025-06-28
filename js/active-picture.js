@@ -1,4 +1,4 @@
-import {isEscapeKey} from './utils.js';
+import {isEscapeKey} from './utils/util.js';
 import {cleanComments, renderComments} from './render-comments.js';
 import {commentsContainer} from './render-comments.js';
 import {commentsMoreButton} from './render-comments.js';
@@ -31,13 +31,13 @@ export const openBigPicture = ({ url, likes, description, comments }) => {
   renderComments({comments});
 };
 
-const closeBigPicture = () => {
+function closeBigPicture () {
   bigPicture.classList.add('hidden');
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onActiveEscKeydown);
   commentsContainer.innerHTML = '';
   cleanComments();
-};
+}
 
 bigPictureCancel.addEventListener('click', closeBigPicture);
 
