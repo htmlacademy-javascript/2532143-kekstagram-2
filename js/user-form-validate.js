@@ -1,16 +1,16 @@
 import { uploadForm, hashtagField, commentField } from './picture-editor.js';
 import { imgLoadButton } from './picture-editor.js';
+const MAXHASHTAGSYMBOLS = 20;
+const MAXHASHTAGS = 5;
+const MAXCOMMENTSYMBOLS = 140;
+
+let errorMessage = '';
 
 const pristine = new Pristine(uploadForm, {
   classTo: 'img-upload__field-wrapper',
   errorClass: 'img-upload__field-wrapper--error',
   errorTextParent: 'img-upload__field-wrapper'
 });
-
-const maxHashtagSymbols = 20;
-const maxHashtags = 5;
-const maxCommentSymbols = 140;
-let errorMessage = '';
 
 const error = () => errorMessage;
 
@@ -21,8 +21,8 @@ const isHashtagValid = (value) => {
 
   const rules = [
     {
-      check: inputField.some((item) => item.length > maxHashtagSymbols),
-      error: `Количество символов не должно превышать ${maxHashtagSymbols}`,
+      check: inputField.some((item) => item.length > MAXHASHTAGSYMBOLS),
+      error: `Количество символов не должно превышать ${MAXHASHTAGSYMBOLS}`,
     },
     {
       check: inputField.some((item) => item[0] !== '#'),
@@ -41,8 +41,8 @@ const isHashtagValid = (value) => {
       error: 'Хэштеги не должны повторяться'
     },
     {
-      check: inputField.length > maxHashtags,
-      error: `Максимально допустимое количество хэштегов - ${maxHashtags}`
+      check: inputField.length > MAXHASHTAGS,
+      error: `Максимально допустимое количество хэштегов - ${MAXHASHTAGS}`
     }
   ];
 
@@ -60,8 +60,8 @@ const isHashtagValid = (value) => {
 };
 
 const isCommentValid = (value) => {
-  const isInvalid = value.length > maxCommentSymbols;
-  errorMessage = `Длина комментария не должна превышать ${maxCommentSymbols} символов`;
+  const isInvalid = value.length > MAXCOMMENTSYMBOLS;
+  errorMessage = `Длина комментария не должна превышать ${MAXCOMMENTSYMBOLS} символов`;
   imgLoadButton.disabled = isInvalid;
   return !isInvalid;
 };

@@ -19,5 +19,6 @@ const load = async (route, method = Method.GET, body = null) => {
   const response = await fetch(`${URL}${route}`, { method, body });
   return response.ok ? await response.json() : Promise.reject(errorText[method]);
 };
+
 export const getData = async () => await load(Route.getData);
 export const sendData = async (body) => await load(Route.sendData, Method.POST, body);
