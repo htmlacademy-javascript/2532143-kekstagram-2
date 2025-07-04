@@ -2,16 +2,12 @@ import { resetEffects } from '../photo-effects.js';
 import { closeEditor, imgLoadButton } from '../picture-editor.js';
 import { sendData } from './server-api.js';
 import { isEscapeKey } from './util.js';
+import { SUBMIT_BUTTON_TEXT } from '../consts.js';
 const succesTemplate = document.querySelector('#success').content;
 const errorTemplate = document.querySelector('#error').content;
 
-const submitButtonText = {
-  Presending: 'Опубликовать',
-  Sending: 'Публикуем...'
-};
-
 const stateButton = (text) => {
-  if (text === submitButtonText.Sending) {
+  if (text === SUBMIT_BUTTON_TEXT.Sending) {
     imgLoadButton.disabled = true;
   } else {
     imgLoadButton.disabled = false;
@@ -38,7 +34,7 @@ function closeNotification (evt) {
 }
 
 const sendForm = async (form) => {
-  stateButton(submitButtonText.Sending);
+  stateButton(SUBMIT_BUTTON_TEXT.Sending);
   try {
     await sendData(new FormData(form));
     appendNotification(succesTemplate);
@@ -47,7 +43,7 @@ const sendForm = async (form) => {
   } catch (error) {
     appendNotification(errorTemplate);
   } finally {
-    stateButton(submitButtonText.Presending);
+    stateButton(SUBMIT_BUTTON_TEXT.Presending);
   }
 };
 

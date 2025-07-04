@@ -1,6 +1,11 @@
-// Нахождение случайного числа
-const getRandomInteger = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+export const getRandomInteger = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
-const isEscapeKey = (evt) => evt.key === 'Escape';
+export const isEscapeKey = (evt) => evt.key === 'Escape';
 
-export {getRandomInteger, isEscapeKey};
+export const debounce = (callback, timeoutDelay = 500) => {
+  let timeoutId;
+  return function() {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback(...arguments), timeoutDelay);
+  };
+};

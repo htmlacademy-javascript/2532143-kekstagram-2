@@ -1,4 +1,4 @@
-import { EFFECTS } from './effects-data';
+import { EFFECTS, EFFECTS_SETTING } from './consts.js';
 
 const uploadWrapper = document.querySelector('.img-upload__wrapper');
 const effectsList = uploadWrapper.querySelector('.effects__list');
@@ -6,6 +6,7 @@ const slider = uploadWrapper.querySelector('.effect-level__slider');
 const effectLevel = uploadWrapper.querySelector('.img-upload__effect-level');
 const effectLevelValue = effectLevel.querySelector('.effect-level__value');
 const previewImage = uploadWrapper.querySelector('.img-upload__preview');
+let effect;
 
 noUiSlider.create(slider, {
   range: {
@@ -16,12 +17,21 @@ noUiSlider.create(slider, {
   connect: 'lower',
 });
 
-slider.noUiSlider.on('update', () => {
-  effectLevelValue.value = slider.noUiSlider.get();
-});
+const updateSlider = (currentEffect) => {
+  const sliderValue = slider.noUiSlider.updateOptions(EFFECTS_SETTING[currentEffect].slider);
+  return sliderValue;
+};
+
+const sliderOn = (currentEffect) => {
+  slider.noUiSlider.on('update', () => {
+    effectLevelValue.value = slider.noUiSlider.get();
+    const {style, token} = EFFECTS_SETTING[currentEffect];
+    previewImage.style.filter = `${style}(${effectLevelValue.value}${token})`;
+  });
+};
 
 const effectChange = (evt) => {
-  const effect = evt.target.value;
+  effect = evt.target.value;
 
   if (effect === EFFECTS.NONE) {
     effectLevel.classList.add('hidden');
@@ -30,80 +40,35 @@ const effectChange = (evt) => {
   }
 
   switch (effect) {
-    case 'none':
-      previewImage.style.filter = 'none';
+    case EFFECTS.NONE:
+      previewImage.style.filter = EFFECTS.NONE;
       break;
-    case 'chrome':
-      slider.noUiSlider.updateOptions({
-        range: {
-          min: 0,
-          max: 1
-        },
-        start: 1,
-        step: 0.1
-      });
-      slider.noUiSlider.on('update', () => {
-        previewImage.style.filter = `grayscale(${effectLevelValue.value})`;
-      });
+    case EFFECTS.CHROME:
+      updateSlider(EFFECTS.CHROME);
+      sliderOn(EFFECTS.CHROME);
       break;
-    case 'sepia':
-      slider.noUiSlider.updateOptions({
-        range: {
-          min: 0,
-          max: 1
-        },
-        start: 1,
-        step: 0.1
-      });
-      slider.noUiSlider.on('update', () => {
-        previewImage.style.filter = `sepia(${effectLevelValue.value})`;
-      });
+    case EFFECTS.SEPIA:
+      updateSlider(EFFECTS.SEPIA);
+      sliderOn(EFFECTS.SEPIA);
       break;
-    case 'marvin':
-      slider.noUiSlider.updateOptions({
-        range: {
-          min: 0,
-          max: 100
-        },
-        start: 100,
-        step: 1
-      });
-      slider.noUiSlider.on('update', () => {
-        previewImage.style.filter = `invert(${effectLevelValue.value}%)`;
-      });
+    case EFFECTS.MARVIN:
+      updateSlider(EFFECTS.MARVIN);
+      sliderOn(EFFECTS.MARVIN);
       break;
-    case 'phobos':
-      slider.noUiSlider.updateOptions({
-        range: {
-          min: 0,
-          max: 3
-        },
-        start: 3,
-        step: 0.1
-      });
-      slider.noUiSlider.on('update', () => {
-        previewImage.style.filter = `blur(${effectLevelValue.value}px)`;
-      });
+    case EFFECTS.PHOBOS:
+      updateSlider(EFFECTS.PHOBOS);
+      sliderOn(EFFECTS.PHOBOS);
       break;
-    case 'heat':
-      slider.noUiSlider.updateOptions({
-        range: {
-          min: 1,
-          max: 3
-        },
-        start: 3,
-        step: 0.1
-      });
-      slider.noUiSlider.on('update', () => {
-        previewImage.style.filter = `brightness(${effectLevelValue.value})`;
-      });
+    case EFFECTS.HEAT:
+      updateSlider(EFFECTS.HEAT);
+      sliderOn(EFFECTS.HEAT);
       break;
   }
 };
 
 export const resetEffects = () => {
   effectLevel.classList.add('hidden');
-  previewImage.style.filter = 'none';
+  previewImage.style.filter = EFFECTS.NONE;
   document.querySelector('#effect-none').checked = true;
 };
 
