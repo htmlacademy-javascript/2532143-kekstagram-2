@@ -6,7 +6,7 @@ import {commentsMoreButton} from './render-comments.js';
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureCancel = document.querySelector('.big-picture__cancel');
 
-const renderBigPicture = ({ url, likes, description, comments }) => {
+export const renderBigPicture = ({ url, likes, description, comments }) => {
 
   bigPicture.querySelector('.big-picture__img img').src = url;
   bigPicture.querySelector('.likes-count').textContent = likes;
@@ -40,5 +40,3 @@ function closeBigPicture () {
 }
 
 bigPictureCancel.addEventListener('click', closeBigPicture);
-
-

@@ -2,24 +2,18 @@ import { resetEffects } from '../photo-effects.js';
 import { closeEditor, imgLoadButton } from '../picture-editor.js';
 import { sendData } from './server-api.js';
 import { isEscapeKey } from './util.js';
-
-const submitButtonText = {
-  PRESENDING: 'Опубликовать',
-  SENDING: 'Публикуем...'
-};
-
-const disabledButton = (text) => {
-  imgLoadButton.disabled = true;
-  imgLoadButton.textContent = text;
-};
-
-const enabledButton = (text) => {
-  imgLoadButton.disabled = false;
-  imgLoadButton.textContent = text;
-};
-
+import { SUBMIT_BUTTON_TEXT } from '../consts.js';
 const succesTemplate = document.querySelector('#success').content;
 const errorTemplate = document.querySelector('#error').content;
+
+const stateButton = (text) => {
+  if (text === SUBMIT_BUTTON_TEXT.Sending) {
+    imgLoadButton.disabled = true;
+  } else {
+    imgLoadButton.disabled = false;
+  }
+  imgLoadButton.textContent = text;
+};
 
 const appendNotification = (template) => {
   const newNotification = template.cloneNode(true);
@@ -40,7 +34,7 @@ function closeNotification (evt) {
 }
 
 const sendForm = async (form) => {
-  disabledButton(submitButtonText.SENDING);
+  stateButton(SUBMIT_BUTTON_TEXT.Sending);
   try {
     await sendData(new FormData(form));
     appendNotification(succesTemplate);
@@ -49,7 +43,7 @@ const sendForm = async (form) => {
   } catch (error) {
     appendNotification(errorTemplate);
   } finally {
-    enabledButton(submitButtonText.PRESENDING);
+    stateButton(SUBMIT_BUTTON_TEXT.Presending);
   }
 };
 

@@ -1,16 +1,14 @@
 import { uploadForm, hashtagField, commentField } from './picture-editor.js';
 import { imgLoadButton } from './picture-editor.js';
+import { VALIDATE, rulesChecker } from './consts.js';
+
+let errorMessage = '';
 
 const pristine = new Pristine(uploadForm, {
   classTo: 'img-upload__field-wrapper',
   errorClass: 'img-upload__field-wrapper--error',
   errorTextParent: 'img-upload__field-wrapper'
 });
-
-const maxHashtagSymbols = 20;
-const maxHashtags = 5;
-const maxCommentSymbols = 140;
-let errorMessage = '';
 
 const error = () => errorMessage;
 
@@ -19,32 +17,7 @@ const isHashtagValid = (value) => {
   const inputText = value.toLowerCase().trim();
   const inputField = inputText.split(/\s+/);
 
-  const rules = [
-    {
-      check: inputField.some((item) => item.length > maxHashtagSymbols),
-      error: `Количество символов не должно превышать ${maxHashtagSymbols}`,
-    },
-    {
-      check: inputField.some((item) => item[0] !== '#'),
-      error: 'Хэштег должен начинаться с решетки',
-    },
-    {
-      check: inputField.some((item) => !/^#[a-zа-яё0-9]{1,19}$/i.test(item)),
-      error: 'Хэштег содержит недопустимые символы',
-    },
-    {
-      check: inputField.some((item) => item.slice(1).includes('#')),
-      error: 'Хэштеги разделяются пробелами'
-    },
-    {
-      check: inputField.some((item, num, array) => array.includes(item, num + 1)),
-      error: 'Хэштеги не должны повторяться'
-    },
-    {
-      check: inputField.length > maxHashtags,
-      error: `Максимально допустимое количество хэштегов - ${maxHashtags}`
-    }
-  ];
+  const rules = rulesChecker(inputField);
 
   if (inputText === '') {
     imgLoadButton.disabled = false;
@@ -60,8 +33,8 @@ const isHashtagValid = (value) => {
 };
 
 const isCommentValid = (value) => {
-  const isInvalid = value.length > maxCommentSymbols;
-  errorMessage = `Длина комментария не должна превышать ${maxCommentSymbols} символов`;
+  const isInvalid = value.length > VALIDATE.MAXCOMMENTSYMBOLS;
+  errorMessage = `Длина комментария не должна превышать ${VALIDATE.MAXCOMMENTSYMBOLS} символов`;
   imgLoadButton.disabled = isInvalid;
   return !isInvalid;
 };
