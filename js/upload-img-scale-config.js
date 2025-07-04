@@ -1,14 +1,11 @@
 import './photo-effects.js';
+import { SCALE_CONFIG } from './consts.js';
 
 const scaleControlBigger = document.querySelector('.scale__control--bigger');
 const scaleControlSmaller = document.querySelector('.scale__control--smaller');
 const scaleControlValue = document.querySelector('.scale__control--value');
 const previewImage = document.querySelector('.img-upload__preview img');
 
-
-const minScale = 25;
-const maxScale = 100;
-const scaleStep = 25;
 let controlValue = parseInt(scaleControlValue.value, 10);
 
 const changeScale = () => {
@@ -18,26 +15,26 @@ const changeScale = () => {
 };
 
 const updateControlValueState = () => {
-  scaleControlSmaller.disabled = controlValue <= minScale;
-  scaleControlBigger.disabled = controlValue >= maxScale;
+  scaleControlSmaller.disabled = controlValue <= SCALE_CONFIG.MIN;
+  scaleControlBigger.disabled = controlValue >= SCALE_CONFIG.MAX;
 };
 
 const toSmaller = () => {
-  controlValue -= scaleStep;
+  controlValue -= SCALE_CONFIG.STEP;
   scaleControlValue.value = `${controlValue}%`;
   changeScale();
   updateControlValueState();
 };
 
 const toBigger = () => {
-  controlValue += scaleStep;
+  controlValue += SCALE_CONFIG.STEP;
   scaleControlValue.value = `${controlValue}%`;
   changeScale();
   updateControlValueState();
 };
 
 export const resetScale = () => {
-  controlValue = maxScale;
+  controlValue = SCALE_CONFIG.MAX;
   scaleControlValue.value = `${controlValue}%`;
   changeScale();
   updateControlValueState();

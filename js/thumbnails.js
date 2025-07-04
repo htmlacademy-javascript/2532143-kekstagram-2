@@ -1,6 +1,6 @@
 import {openBigPicture} from './active-picture.js';
 
-const pictureContainer = document.querySelector('.pictures');
+export const pictureContainer = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture')
   .content
   .querySelector('.picture');
