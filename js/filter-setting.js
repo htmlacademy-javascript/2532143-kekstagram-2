@@ -2,11 +2,10 @@
 import { debounce } from './utils/util.js';
 import { FILTER, SORTFUNC } from './consts.js';
 import { renderFilter } from './render-filter-pictures.js';
-
+const ACTIVE_BUTTON_CLASS = 'img-filters__button--active';
+const filterElement = document.querySelector('.img-filters');
 let currentFilter = FILTER.default;
 let pictures = [];
-const filterElement = document.querySelector('.img-filters');
-const ACTIVE_BUTTON_CLASS = 'img-filters__button--active';
 
 const debounceRender = debounce(renderFilter);
 
