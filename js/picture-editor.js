@@ -2,15 +2,17 @@ import {isEscapeKey} from './utils/util.js';
 import {resetScale} from './upload-img-scale-config.js';
 import {formSubmit} from './utils/load-form.js';
 import {effectLevel, resetEffects} from './photo-effects.js';
-import './upload-img-scale-config.js';
+import { IMAGE_TYPES } from './consts.js';
 
 const uploadForm = document.querySelector('.img-upload__form');
-const uploadButton = document.querySelector('.img-upload__input');
+const uploadButton = document.querySelector('#upload-file');
 const editorWindow = document.querySelector('.img-upload__overlay');
 const editorCancelButton = document.querySelector('.img-upload__cancel');
 const hashtagField = document.querySelector('.text__hashtags');
 const commentField = document.querySelector('.text__description');
 const imgLoadButton = document.querySelector('.img-upload__submit');
+const uploadPreview = document.querySelector('.img-upload__preview img');
+const effectsPreview = document.querySelectorAll('.effects__preview');
 
 const closeEditor = () => {
   editorWindow.classList.add('hidden');
@@ -45,8 +47,24 @@ const openEditor = () => {
   commentField.addEventListener('keydown', evtEscPrevent);
 };
 
-uploadButton.addEventListener('change', openEditor);
+const uploadNewImage = () => {
+  const file = uploadButton.files[0];
+  const fileName = file.name.toLowerCase();
+  const fileExt = fileName.split('.').pop();
+  const matches = IMAGE_TYPES.includes(fileExt);
+  if (matches) {
+    const url = URL.createObjectURL(file);
+    uploadPreview.src = url;
+    effectsPreview.forEach((item) => {
+      item.style.backgroundImage = `url(${url})`;
+    });
+  }
+  openEditor();
+};
+
+uploadButton.addEventListener('change', uploadNewImage);
 editorCancelButton.addEventListener('click', closeEditor);
 uploadForm.addEventListener('submit', formSubmit);
+
 
 export {uploadForm, hashtagField, commentField, imgLoadButton, closeEditor};

@@ -157,3 +157,5 @@ export const SORTFUNC = {
   DISCUSSED: (a, b) => b.comments.length - a.comments.length,
   MAXCOUNT: 10
 };
+
+export const IMAGE_TYPES = ['jpg', 'jpeg', 'png', 'gif', 'jtif'];
