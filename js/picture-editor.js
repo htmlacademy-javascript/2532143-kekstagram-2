@@ -1,5 +1,5 @@
 import {isEscapeKey} from './utils/util.js';
-import {resetScale} from './upload-img-scale-config.js';
+import {resetScale, updateControlValueState} from './upload-img-scale-config.js';
 import {formSubmit} from './utils/load-form.js';
 import {effectLevel, resetEffects} from './photo-effects.js';
 import { IMAGE_TYPES } from './consts.js';
@@ -14,6 +14,12 @@ const imgLoadButton = document.querySelector('.img-upload__submit');
 const uploadPreview = document.querySelector('.img-upload__preview img');
 const effectsPreview = document.querySelectorAll('.effects__preview');
 
+export const pristine = new Pristine(uploadForm, {
+  classTo: 'img-upload__field-wrapper',
+  errorClass: 'img-upload__field-wrapper--error',
+  errorTextParent: 'img-upload__field-wrapper'
+});
+
 const closeEditor = () => {
   editorWindow.classList.add('hidden');
   document.body.classList.remove('modal-open');
@@ -23,6 +29,8 @@ const closeEditor = () => {
   uploadForm.reset();
   resetScale();
   resetEffects();
+  pristine.reset();
+  imgLoadButton.disabled = false;
 };
 
 function onActiveEscKeydown(evt) {
@@ -45,6 +53,7 @@ const openEditor = () => {
   document.addEventListener('keydown', onActiveEscKeydown);
   hashtagField.addEventListener('keydown', evtEscPrevent);
   commentField.addEventListener('keydown', evtEscPrevent);
+  updateControlValueState();
 };
 
 const uploadNewImage = () => {

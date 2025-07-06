@@ -1,22 +1,13 @@
-import { uploadForm, hashtagField, commentField } from './picture-editor.js';
+import { hashtagField, commentField, pristine} from './picture-editor.js';
 import { imgLoadButton } from './picture-editor.js';
 import { VALIDATE, rulesChecker } from './consts.js';
 
 let errorMessage = '';
-
-const pristine = new Pristine(uploadForm, {
-  classTo: 'img-upload__field-wrapper',
-  errorClass: 'img-upload__field-wrapper--error',
-  errorTextParent: 'img-upload__field-wrapper'
-});
-
 const error = () => errorMessage;
 
 const isHashtagValid = (value) => {
-
   const inputText = value.toLowerCase().trim();
   const inputField = inputText.split(/\s+/);
-
   const rules = rulesChecker(inputField);
 
   if (inputText === '') {
@@ -38,7 +29,6 @@ const isCommentValid = (value) => {
   imgLoadButton.disabled = isInvalid;
   return !isInvalid;
 };
-
 
 pristine.addValidator(hashtagField, isHashtagValid, error);
 pristine.addValidator(commentField, isCommentValid, error);
