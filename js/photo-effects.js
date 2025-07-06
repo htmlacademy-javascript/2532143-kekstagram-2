@@ -5,7 +5,7 @@ const effectsList = uploadWrapper.querySelector('.effects__list');
 const slider = uploadWrapper.querySelector('.effect-level__slider');
 const effectLevel = uploadWrapper.querySelector('.img-upload__effect-level');
 const effectLevelValue = effectLevel.querySelector('.effect-level__value');
-const previewImage = uploadWrapper.querySelector('.img-upload__preview');
+const previewImage = uploadWrapper.querySelector('.img-upload__preview img');
 let effect;
 
 noUiSlider.create(slider, {
@@ -14,6 +14,14 @@ noUiSlider.create(slider, {
     'max': 1
   },
   start: 0,
+  format: {
+    to: function (value) {
+      return parseFloat(value);
+    },
+    from: function (value) {
+      return parseFloat(value);
+    },
+  },
   connect: 'lower',
 });
 
@@ -25,7 +33,7 @@ const updateSlider = (currentEffect) => {
 const sliderOn = (currentEffect) => {
   slider.noUiSlider.on('update', () => {
     effectLevelValue.value = slider.noUiSlider.get();
-    const {style, token} = EFFECTS_SETTING[currentEffect];
+    const { style, token } = EFFECTS_SETTING[currentEffect];
     previewImage.style.filter = `${style}(${effectLevelValue.value}${token})`;
   });
 };
@@ -74,4 +82,4 @@ export const resetEffects = () => {
 
 effectsList.addEventListener('change', effectChange);
 
-export {effectLevel};
+export { effectLevel };

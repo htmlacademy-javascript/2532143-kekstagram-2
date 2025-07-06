@@ -19,14 +19,14 @@ export const updateControlValueState = () => {
 };
 
 const toSmaller = () => {
-  controlValue -= SCALE_CONFIG.STEP;
+  controlValue = Math.max(controlValue - SCALE_CONFIG.STEP, SCALE_CONFIG.MIN);
   scaleControlValue.value = `${controlValue}%`;
   changeScale();
   updateControlValueState();
 };
 
 const toBigger = () => {
-  controlValue += SCALE_CONFIG.STEP;
+  controlValue = Math.min(controlValue + SCALE_CONFIG.STEP, SCALE_CONFIG.MAX);
   scaleControlValue.value = `${controlValue}%`;
   changeScale();
   updateControlValueState();
