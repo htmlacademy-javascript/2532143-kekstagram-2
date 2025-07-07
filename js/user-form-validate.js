@@ -3,7 +3,7 @@ import { imgLoadButton } from './picture-editor.js';
 import { VALIDATE, rulesChecker } from './consts.js';
 
 let errorMessage = '';
-const error = () => errorMessage;
+const errorTextValue = () => errorMessage;
 
 const isHashtagValid = (value) => {
   const inputText = value.toLowerCase().trim();
@@ -30,6 +30,6 @@ const isCommentValid = (value) => {
   return !isInvalid;
 };
 
-pristine.addValidator(hashtagField, isHashtagValid, error);
-pristine.addValidator(commentField, isCommentValid, error);
+pristine.addValidator(hashtagField, isHashtagValid, errorTextValue);
+pristine.addValidator(commentField, isCommentValid, errorTextValue);
 

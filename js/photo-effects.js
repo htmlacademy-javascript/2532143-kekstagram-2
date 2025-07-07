@@ -30,7 +30,7 @@ const updateSlider = (currentEffect) => {
   return sliderValue;
 };
 
-const sliderOn = (currentEffect) => {
+const sliderChange = (currentEffect) => {
   slider.noUiSlider.on('update', () => {
     effectLevelValue.value = slider.noUiSlider.get();
     const { style, token } = EFFECTS_SETTING[currentEffect];
@@ -53,23 +53,23 @@ const effectChange = (evt) => {
       break;
     case EFFECTS.CHROME:
       updateSlider(EFFECTS.CHROME);
-      sliderOn(EFFECTS.CHROME);
+      sliderChange(EFFECTS.CHROME);
       break;
     case EFFECTS.SEPIA:
       updateSlider(EFFECTS.SEPIA);
-      sliderOn(EFFECTS.SEPIA);
+      sliderChange(EFFECTS.SEPIA);
       break;
     case EFFECTS.MARVIN:
       updateSlider(EFFECTS.MARVIN);
-      sliderOn(EFFECTS.MARVIN);
+      sliderChange(EFFECTS.MARVIN);
       break;
     case EFFECTS.PHOBOS:
       updateSlider(EFFECTS.PHOBOS);
-      sliderOn(EFFECTS.PHOBOS);
+      sliderChange(EFFECTS.PHOBOS);
       break;
     case EFFECTS.HEAT:
       updateSlider(EFFECTS.HEAT);
-      sliderOn(EFFECTS.HEAT);
+      sliderChange(EFFECTS.HEAT);
       break;
   }
 };

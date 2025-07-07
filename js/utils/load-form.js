@@ -8,7 +8,7 @@ const errorTemplate = document.querySelector('#error').content;
 
 const stateButton = (text) => {
   if (text === SUBMIT_BUTTON_TEXT.Sending) {
-    imgLoadButton.disabled = true;
+    imgLoadButton.disabled = text;
   } else {
     imgLoadButton.disabled = false;
   }
