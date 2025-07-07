@@ -1,11 +1,11 @@
 import {isEscapeKey} from './utils/util.js';
 import {resetScale, updateControlValueState} from './upload-img-scale-config.js';
-import {formSubmit} from './utils/load-form.js';
+import {submitForm} from './utils/load-form.js';
 import {effectLevel, resetEffects} from './photo-effects.js';
 import { IMAGE_TYPES } from './consts.js';
 
 const uploadForm = document.querySelector('.img-upload__form');
-const uploadButton = document.querySelector('#upload-file');
+const uploadInput = document.querySelector('#upload-file');
 const editorWindow = document.querySelector('.img-upload__overlay');
 const editorCancelButton = document.querySelector('.img-upload__cancel');
 const hashtagField = document.querySelector('.text__hashtags');
@@ -24,8 +24,8 @@ const closeEditor = () => {
   editorWindow.classList.add('hidden');
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onActiveEscKeydown);
-  hashtagField.removeEventListener('keydown', evtEscPrevent);
-  commentField.removeEventListener('keydown', evtEscPrevent);
+  hashtagField.removeEventListener('keydown', onDocumentKeydown);
+  commentField.removeEventListener('keydown', onDocumentKeydown);
   uploadForm.reset();
   resetScale();
   resetEffects();
@@ -40,7 +40,7 @@ function onActiveEscKeydown(evt) {
   }
 }
 
-function evtEscPrevent (evt) {
+function onDocumentKeydown (evt) {
   if (isEscapeKey(evt)) {
     evt.stopPropagation(closeEditor);
   }
@@ -51,13 +51,13 @@ const openEditor = () => {
   document.body.classList.add('modal-open');
   effectLevel.classList.add('hidden');
   document.addEventListener('keydown', onActiveEscKeydown);
-  hashtagField.addEventListener('keydown', evtEscPrevent);
-  commentField.addEventListener('keydown', evtEscPrevent);
+  hashtagField.addEventListener('keydown', onDocumentKeydown);
+  commentField.addEventListener('keydown', onDocumentKeydown);
   updateControlValueState();
 };
 
-const uploadNewImage = () => {
-  const file = uploadButton.files[0];
+const onUploadInputChange = () => {
+  const file = uploadInput.files[0];
   const fileName = file.name.toLowerCase();
   const fileExt = fileName.split('.').pop();
   const matches = IMAGE_TYPES.includes(fileExt);
@@ -71,9 +71,17 @@ const uploadNewImage = () => {
   openEditor();
 };
 
-uploadButton.addEventListener('change', uploadNewImage);
-editorCancelButton.addEventListener('click', closeEditor);
-uploadForm.addEventListener('submit', formSubmit);
+const onEditorCancelButtonClick = () => {
+  closeEditor();
+};
+
+const onUploadFormSubmit = (evt) => {
+  submitForm(evt);
+};
+
+uploadInput.addEventListener('change', onUploadInputChange);
+editorCancelButton.addEventListener('click', onEditorCancelButtonClick);
+uploadForm.addEventListener('submit', onUploadFormSubmit);
 
 
 export {uploadForm, hashtagField, commentField, imgLoadButton, closeEditor};

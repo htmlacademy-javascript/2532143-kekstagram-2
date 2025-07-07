@@ -122,30 +122,30 @@ export const VALIDATE = {
   MAXCOMMENTSYMBOLS: 140
 };
 
-export const rulesChecker = (value) => {
+export const rulesChecker = (hashtags) => {
   const rules = [
     {
-      check: value.some((item) => item.length > VALIDATE.MAXHASHTAGSYMBOLS),
+      check: hashtags.some((item) => item.length > VALIDATE.MAXHASHTAGSYMBOLS),
       error: `Количество символов не должно превышать ${VALIDATE.MAXHASHTAGSYMBOLS}`,
     },
     {
-      check: value.some((item) => item[0] !== '#'),
+      check: hashtags.some((item) => item[0] !== '#'),
       error: 'Хэштег должен начинаться с решетки',
     },
     {
-      check: value.some((item) => !/^#[a-zа-яё0-9]{1,19}$/i.test(item)),
+      check: hashtags.some((item) => !/^#[a-zа-яё0-9]{1,19}$/i.test(item)),
       error: 'Хэштег содержит недопустимые символы',
     },
     {
-      check: value.some((item) => item.slice(1).includes('#')),
+      check: hashtags.some((item) => item.slice(1).includes('#')),
       error: 'Хэштеги разделяются пробелами'
     },
     {
-      check: value.some((item, num, array) => array.includes(item, num + 1)),
+      check: hashtags.some((item, num) => hashtags.includes(item, num + 1)),
       error: 'Хэштеги не должны повторяться'
     },
     {
-      check: value.length > VALIDATE.MAXHASHTAGS,
+      check: hashtags.length > VALIDATE.MAXHASHTAGS,
       error: `Максимально допустимое количество хэштегов - ${VALIDATE.MAXHASHTAGS}`
     }
   ];
@@ -153,8 +153,8 @@ export const rulesChecker = (value) => {
 };
 
 export const SORTFUNC = {
-  RANDOM_VALUE: () => 0.5 - Math.random(),
-  DISCUSSED_VALUE: (a, b) => b.comments.length - a.comments.length,
+  GET_RANDOM: () => 0.5 - Math.random(),
+  GET_DISCUSSED: (a, b) => b.comments.length - a.comments.length,
   MAXCOUNT: 10
 };
 

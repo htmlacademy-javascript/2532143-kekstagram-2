@@ -32,10 +32,10 @@ function applyFilter () {
       filteredPictures = pictures;
       break;
     case FILTER.random:
-      filteredPictures = pictures.toSorted(SORTFUNC.RANDOM_VALUE).slice(0, SORTFUNC.MAXCOUNT);
+      filteredPictures = pictures.toSorted(SORTFUNC.GET_RANDOM).slice(0, SORTFUNC.MAXCOUNT);
       break;
     case FILTER.discussed:
-      filteredPictures = pictures.toSorted(SORTFUNC.DISCUSSED_VALUE);
+      filteredPictures = pictures.toSorted(SORTFUNC.GET_DISCUSSED);
       break;
   }
   debounceRender(filteredPictures);
