@@ -30,7 +30,7 @@ const updateSlider = (currentEffect) => {
   return sliderValue;
 };
 
-const sliderOn = (currentEffect) => {
+const changeSlider = (currentEffect) => {
   slider.noUiSlider.on('update', () => {
     effectLevelValue.value = slider.noUiSlider.get();
     const { style, token } = EFFECTS_SETTING[currentEffect];
@@ -38,39 +38,16 @@ const sliderOn = (currentEffect) => {
   });
 };
 
-const effectChange = (evt) => {
+const changeEffect = (evt) => {
   effect = evt.target.value;
 
   if (effect === EFFECTS.NONE) {
     effectLevel.classList.add('hidden');
+    previewImage.style.filter = EFFECTS.NONE;
   } else {
     effectLevel.classList.remove('hidden');
-  }
-
-  switch (effect) {
-    case EFFECTS.NONE:
-      previewImage.style.filter = EFFECTS.NONE;
-      break;
-    case EFFECTS.CHROME:
-      updateSlider(EFFECTS.CHROME);
-      sliderOn(EFFECTS.CHROME);
-      break;
-    case EFFECTS.SEPIA:
-      updateSlider(EFFECTS.SEPIA);
-      sliderOn(EFFECTS.SEPIA);
-      break;
-    case EFFECTS.MARVIN:
-      updateSlider(EFFECTS.MARVIN);
-      sliderOn(EFFECTS.MARVIN);
-      break;
-    case EFFECTS.PHOBOS:
-      updateSlider(EFFECTS.PHOBOS);
-      sliderOn(EFFECTS.PHOBOS);
-      break;
-    case EFFECTS.HEAT:
-      updateSlider(EFFECTS.HEAT);
-      sliderOn(EFFECTS.HEAT);
-      break;
+    updateSlider(effect);
+    changeSlider(effect);
   }
 };
 
@@ -80,6 +57,10 @@ export const resetEffects = () => {
   document.querySelector('#effect-none').checked = true;
 };
 
-effectsList.addEventListener('change', effectChange);
+const onEffectsListChange = (evt) => {
+  changeEffect(evt);
+};
+
+effectsList.addEventListener('change', onEffectsListChange);
 
 export { effectLevel };

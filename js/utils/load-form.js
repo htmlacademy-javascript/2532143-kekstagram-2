@@ -7,20 +7,24 @@ const succesTemplate = document.querySelector('#success').content;
 const errorTemplate = document.querySelector('#error').content;
 
 const stateButton = (text) => {
-  if (text === SUBMIT_BUTTON_TEXT.Sending) {
-    imgLoadButton.disabled = true;
-  } else {
-    imgLoadButton.disabled = false;
-  }
+  imgLoadButton.disabled = text === SUBMIT_BUTTON_TEXT.Sending;
   imgLoadButton.textContent = text;
 };
 
 const appendNotification = (template) => {
   const newNotification = template.cloneNode(true);
   document.body.append(newNotification);
-  document.body.addEventListener('click', closeNotification);
-  document.body.addEventListener('keydown', closeNotification);
+  document.body.addEventListener('click', onDocumentClick);
+  document.body.addEventListener('keydown', onDocumentKeydown);
 };
+
+function onDocumentClick(evt) {
+  closeNotification(evt);
+}
+
+function onDocumentKeydown(evt) {
+  closeNotification(evt);
+}
 
 function closeNotification (evt) {
   evt.stopPropagation();
@@ -28,8 +32,8 @@ function closeNotification (evt) {
   const closeButton = existElement.querySelector('button');
   if (evt.target === existElement || evt.target === closeButton || isEscapeKey(evt)) {
     existElement.remove();
-    document.body.removeEventListener('click', closeNotification);
-    document.body.removeEventListener('keydown', closeNotification);
+    document.body.removeEventListener('click', onDocumentClick);
+    document.body.removeEventListener('keydown', onDocumentKeydown);
   }
 }
 
@@ -47,7 +51,7 @@ const sendForm = async (form) => {
   }
 };
 
-export const formSubmit = (evt) => {
+export const submitForm = (evt) => {
   evt.preventDefault();
   sendForm(evt.target);
 };

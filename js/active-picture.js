@@ -39,4 +39,8 @@ function closeBigPicture () {
   cleanComments();
 }
 
-bigPictureCancel.addEventListener('click', closeBigPicture);
+const onBigPictureCancelClick = () => {
+  closeBigPicture();
+};
+
+bigPictureCancel.addEventListener('click', onBigPictureCancelClick);

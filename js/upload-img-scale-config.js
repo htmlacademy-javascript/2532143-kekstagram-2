@@ -18,14 +18,14 @@ export const updateControlValueState = () => {
   scaleControlBigger.disabled = controlValue >= SCALE_CONFIG.MAX;
 };
 
-const toSmaller = () => {
+const onSmallerClick = () => {
   controlValue = Math.max(controlValue - SCALE_CONFIG.STEP, SCALE_CONFIG.MIN);
   scaleControlValue.value = `${controlValue}%`;
   changeScale();
   updateControlValueState();
 };
 
-const toBigger = () => {
+const onBiggerClick = () => {
   controlValue = Math.min(controlValue + SCALE_CONFIG.STEP, SCALE_CONFIG.MAX);
   scaleControlValue.value = `${controlValue}%`;
   changeScale();
@@ -39,5 +39,5 @@ export const resetScale = () => {
   updateControlValueState();
 };
 
-scaleControlSmaller.addEventListener('click', toSmaller);
-scaleControlBigger.addEventListener('click', toBigger);
+scaleControlSmaller.addEventListener('click', onSmallerClick);
+scaleControlBigger.addEventListener('click', onBiggerClick);
